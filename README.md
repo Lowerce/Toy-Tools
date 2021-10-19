@@ -19,3 +19,10 @@ The functions of each file are listed below.
    A tool to show you the DNSs of some github servers, and guide you to change your hosts file.
 
    It works sometimes for not all failed connections to github come from DNS cache pollution.
+
+4. auto_ip_senter.py
+
+   A tool to send your ip to specific mailbox.
+
+   In Unix system, this python script will help you send your ip periodically with the help of  **crontab** .
+
