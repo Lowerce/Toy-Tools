@@ -16,11 +16,11 @@ config_file_name = '.global_ip.json'
 
 # 第三方 SMTP 服务
 mail_host = "smtp.163.com"       # SMTP服务器
-mail_user = " "                  # 用户名(邮箱全名)
-mail_pass = " "                  # 授权密码，非登录密码
+mail_user = " "                  # 用户名(邮箱全名)    --须填写
+mail_pass = " "                  # 授权密码，非登录密码 --须填写
 
-sender = ' '    		# 发送邮箱
-receivers = [' ']       # 接收邮箱
+sender = ' '    		# 发送邮箱  --须填写
+receivers = [' ']       # 接收邮箱  --须填写
 
 title = 'update_addr'  			# 邮件主题
 content = ''    				# 邮件内容
@@ -58,10 +58,31 @@ def sendEmail():
 localtime = time.localtime(time.time()) # 打印本地时间
 print("\n" + time.asctime(localtime))
 
+import socket
+# 这种获取方式适用于开启VPN的情况 能够获得本机真实IP
+def get_host_ip():
+    """
+    查询本机ip地址
+    :return: ip
+    """
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(('8.8.8.8', 80))
+        ip = s.getsockname()[0]
+    finally:
+        s.close()
+
+    return ip
+
+
 # 获取ip地址
 my_ip = str(json.load(urlopen(ip_url))['ip'])
+self_ip = get_host_ip()
 
-ip_addr = my_ip
+if self_ip!=my_ip:
+    ip_addr = self_ip
+else:
+    ip_addr = my_ip
 
 
 if(check_configfile_exist()['file_exist'] & check_configfile_exist()['file_write']):
